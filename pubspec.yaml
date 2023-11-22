@@ -33,6 +33,9 @@ dependencies:
 
   kinde_flutter_sdk: 1.0.1
   url_launcher: ^6.1.11
+  hive: ^2.2.3
+  flutter_secure_storage: ^8.0.0
+  jwt_decoder: ^2.0.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

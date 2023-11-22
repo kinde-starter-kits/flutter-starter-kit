@@ -12,10 +12,14 @@ To get started set up an account on [Kinde](https://app.kinde.com/register).
 4. Add in the callback URLs for your app, which might look something like this:
    - Allowed callback URLs: <your_custom_scheme>://kinde_callback
    - Allowed logout redirect URLs: <your_custom_scheme>://kinde_logoutcallback
+   
+Example:
 
-          loginRedirectUri: 'com.kinde.myapp://kinde_callback',
-          logoutRedirectUri: 'com.kinde.myapp://kinde_logoutcallback',
+           loginRedirectUri: 'com.kinde.myapp://kinde_callback',
+           logoutRedirectUri: 'com.kinde.myapp://kinde_logoutcallback',
 5. Select Save.
+
+**Note:** The custom scheme can either match your appId/bundleId or be something completely new as long as it's distinct enough. Using the appId/bundleId of your app is quite common but it's not always possible if it contains illegal characters for URI schemes (like underscores) or if you already have another handler for that scheme - so just use something else.
 
 ## Setup flutter project
 ### Android Setup
