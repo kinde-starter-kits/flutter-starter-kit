@@ -13,19 +13,15 @@ class HomeFooter extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            Constants.appTitle,
-            style: TextStyle(
-                fontWeight: FontWeight.w500, color: Colors.black, fontSize: 24),
+          Text(
+            appTitle,
+            style: kTitleText,
           ),
-          const SizedBox(height: 8),
+          verticalSpaceSmall,
           RichText(
             text: TextSpan(
                 text: 'Visit our ',
-                style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                    fontSize: 20),
+                style: kTitleText.copyWith(fontSize: kHeadingTwo),
                 children: [
                   TextSpan(
                       text: 'help center',
@@ -34,17 +30,15 @@ class HomeFooter extends StatelessWidget {
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          launchUrl(Uri.parse(Constants.docsUrl));
+                          launchUrl(Uri.parse(helpUrl));
                         })
                 ]),
           ),
-          const SizedBox(height: 8),
-          const Text(
+          verticalSpaceSmall,
+          Text(
             '© 2022 KindeAuth, Inc. All rights reserved',
-            style: TextStyle(
-                fontWeight: FontWeight.w500,
-                color: Color(0xFF676767),
-                fontSize: 16),
+            style: kRobotoText.copyWith(
+                fontWeight: kFwMedium, color: kColorGrey, fontSize: kBodySmall),
           ),
         ],
       ),

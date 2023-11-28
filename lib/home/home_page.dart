@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_starter_kit/constants.dart';
 import 'package:flutter_starter_kit/home/components/home_body.dart';
 import 'package:flutter_starter_kit/home/components/home_footer.dart';
 import 'package:flutter_starter_kit/home/components/home_header.dart';
@@ -35,8 +37,8 @@ class _HomePageState extends State<HomePage> {
       body: Padding(
         padding: EdgeInsets.only(
             top: MediaQuery.viewPaddingOf(context).top,
-            left: 16,
-            right: 16,
+            left: 16.w,
+            right: 16.w,
             bottom: MediaQuery.viewPaddingOf(context).bottom),
         child: Column(
           mainAxisSize: MainAxisSize.max,
@@ -51,7 +53,7 @@ class _HomePageState extends State<HomePage> {
                       onLogout: _signOut,
                       onRegister: _signUp);
                 }),
-            const SizedBox(height: 24),
+            verticalSpaceMedium,
             ValueListenableBuilder(
                 valueListenable: _loggedIn,
                 builder: (_, value, __) => HomeBody(loggedIn: value)),

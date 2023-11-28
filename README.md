@@ -58,17 +58,42 @@ Specify the custom scheme similar to the following but replace <your_custom_sche
 
 ## initialize Kinde SDK
 
-Find this configuration block in `main.dart` file
+If you’re using an `.env` file, provide the .env filename inside the load function. See below:
 
             await KindeFlutterSDK.initializeSDK(
-                authDomain: "<your_kinde_domain>",
-                authClientId: "<client_id>",
-                loginRedirectUri: '<your_custom_scheme>://kinde_callback',
-                logoutRedirectUri: '<your_custom_scheme>://kinde_logoutcallback',
-                audience: '<audience>', //optional
+                authDomain: dotenv.env['KINDE_AUTH_DOMAIN']!,
+                authClientId: dotenv.env['KINDE_AUTH_CLIENT_ID']!,
+                loginRedirectUri: dotenv.env['KINDE_LOGIN_REDIRECT_URI']!,
+                logoutRedirectUri: dotenv.env['KINDE_LOGOUT_REDIRECT_URI']!,
+                audience: dotenv.env['KINDE_AUDIENCE'], //optional
                 scopes: ["email","profile","offline","openid"] // optional
-            );  
+            );
 
-Then replace the values you see in `<code brackets>` with your own values from **Settings > Applications > [Your app] > View details page**.
+**Note**: To setup the .env file in your flutter package, check the **[flutter_dotenv](https://pub.dev/packages/flutter_dotenv)** package.
 
-To fetch value for `<audience>`, go to **Settings > Applications > [Your app] > APIs**
+### Environment variables:
+Put these variables in your .env file. You can find these variables on your **Settings > Applications > [Your app] > View details** page.
+
+* `KINDE_AUTH_DOMAIN` - your Kinde domain
+* `KINDE_CLIENT_ID` - your Kinde client ID 
+* `KINDE_LOGIN_REDIRECT_URI` - your callback url to redirect to after authentication. Make sure this URL is under your **Allowed callback URLs**. 
+* `KINDE_LOGOUT_REDIRECT_URI` - where you want users to be redirected to after logging out. Make sure this URL is under your **Allowed logout redirect URLs**. 
+* `KINDE_AUDIENCE` (optional)- the intended recipient of an access token. To fetch this value, go to **Settings > Applications > [Your app] > APIs**
+
+Below is an example of a `.env` file
+
+```
+KINDE_AUTH_DOMAIN=https://<your_kinde_subdomain>.kinde.com
+KINDE_AUTH_CLIENT_ID=<your_kinde_client_id>
+KINDE_LOGIN_REDIRECT_URI=<your_custom_scheme>://kinde_callback
+KINDE_LOGOUT_REDIRECT_URI=<your_custom_scheme>://kinde_logoutcallback
+KINDE_AUDIENCE=<your_kinde_audience>
+```
+**Example:**
+
+```
+KINDE_AUTH_DOMAIN='https://myapp.kinde.com'
+KINDE_AUTH_CLIENT_ID='clientid'
+KINDE_LOGIN_REDIRECT_URI='com.kinde.myapp://kinde_callback'
+KINDE_LOGOUT_REDIRECT_URI='com.kinde.myapp://kinde_logoutcallback'
+KINDE_AUDIENCE='myapp.kinde.com/api'```

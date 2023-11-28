@@ -22,12 +22,13 @@ class HomeHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Text(
-          Constants.appTitle,
-          style: TextStyle(
-              fontWeight: FontWeight.bold, color: Colors.black, fontSize: 20),
+        Text(
+          appTitle,
+          style: kTitleText,
         ),
-        loading ? const CircularProgressIndicator.adaptive() : _trailingWidget(),
+        loading
+            ? const CircularProgressIndicator.adaptive()
+            : _trailingWidget(),
       ],
     );
   }
@@ -43,17 +44,17 @@ class HomeHeader extends StatelessWidget {
               child: ClipOval(
                 child: InkWell(
                   child: Container(
-                    color: const Color(0xFFF7F6F6),
+                    color: kColorLightGrey,
                     alignment: Alignment.center,
                     child: Text(
                       '${profile?.givenName?[0]}${profile?.familyName?[0]}',
-                      style: const TextStyle(fontSize: 24),
+                      style: kTitleText,
                     ),
                   ),
                 ),
               ),
             ),
-            const SizedBox(width: 16),
+            horizontalSpaceRegular,
             InkWell(
               onTap: onLogout,
               child: Column(
@@ -61,7 +62,7 @@ class HomeHeader extends StatelessWidget {
                 children: [
                   Text(
                     '${profile?.givenName} ${profile?.familyName}',
-                    style: const TextStyle(fontSize: 20),
+                    style: kRobotoText.copyWith(fontSize: kHeadingTwo),
                   ),
                   const SizedBox(height: 10),
                   const Text('Sign out'),
@@ -81,10 +82,10 @@ class HomeHeader extends StatelessWidget {
             highlightElevation: 0,
             elevation: 0,
             onPressed: onLogin,
-            child: const Text(
+            child: Text(
               'Sign in',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold, color: Color(0xFF676767)),
+              style:
+                  kRobotoText.copyWith(fontWeight: kFwBold, color: kColorGrey),
             ),
           ),
           MaterialButton(
@@ -92,10 +93,10 @@ class HomeHeader extends StatelessWidget {
             padding: EdgeInsets.zero,
             color: Colors.black,
             onPressed: onRegister,
-            child: const Text(
+            child: Text(
               'Sign up',
-              style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+              style: kRobotoText.copyWith(
+                  fontWeight: kFwBold, color: Colors.white),
             ),
           )
         ],

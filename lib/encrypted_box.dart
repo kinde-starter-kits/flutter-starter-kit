@@ -20,12 +20,14 @@ class EncryptedBox {
   Box get _box => Hive.box(_boxName);
 
   static Future<void> init() async {
-    const FlutterSecureStorage secureStorage =  FlutterSecureStorage();
-    var containsEncryptionKey = await secureStorage.containsKey(key: _encryptionKey);
+    const FlutterSecureStorage secureStorage = FlutterSecureStorage();
+    var containsEncryptionKey =
+        await secureStorage.containsKey(key: _encryptionKey);
     List<int> secureKey;
     if (!containsEncryptionKey) {
       secureKey = Hive.generateSecureKey();
-      await secureStorage.write(key: _encryptionKey, value: base64UrlEncode(secureKey));
+      await secureStorage.write(
+          key: _encryptionKey, value: base64UrlEncode(secureKey));
     } else {
       final base64 = await secureStorage.read(key: _encryptionKey);
       secureKey = base64Url.decode(base64!);
