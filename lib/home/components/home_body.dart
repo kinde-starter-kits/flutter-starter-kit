@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_starter_kit/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -15,41 +16,41 @@ class HomeBody extends StatelessWidget {
   Widget _initialContent() {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(32),
-      decoration: const BoxDecoration(
-          color: Colors.black,
-          borderRadius: BorderRadius.all(Radius.circular(16))),
+      padding: EdgeInsets.all(32.w),
+      decoration: roundedBoxRegular,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(height: 24),
-          const Text(
+          verticalSpaceMedium,
+          Text(
             "Let's Start\nauthenticating\nwith KindeAuth",
             textAlign: TextAlign.center,
-            style: TextStyle(
-                fontWeight: FontWeight.w900, color: Colors.white, fontSize: 32),
+            style: kRobotoText.copyWith(
+                fontWeight: kFwBlack,
+                color: Colors.white,
+                fontSize: kTitleLarge),
           ),
-          const SizedBox(height: 24),
-          const Text(
+          verticalSpaceMedium,
+          Text(
             "Configure your app",
             textAlign: TextAlign.center,
-            style: TextStyle(
-                fontWeight: FontWeight.w500, color: Colors.white, fontSize: 24),
+            style:
+                kTitleText.copyWith(fontWeight: kFwBlack, color: Colors.white),
           ),
-          const SizedBox(height: 24),
+          verticalSpaceMedium,
           MaterialButton(
             elevation: 0,
             color: Colors.white,
             onPressed: () {
-              launchUrl(Uri.parse(Constants.docsUrl));
+              launchUrl(Uri.parse(docsUrl));
             },
-            child: const Text(
+            child: Text(
               'Go to docs',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontWeight: FontWeight.w900,
+              style: kRobotoText.copyWith(
+                  fontWeight: kFwBlack,
                   color: Colors.black,
-                  fontSize: 20),
+                  fontSize: kHeadingTwo),
             ),
           ),
         ],
@@ -63,39 +64,33 @@ class HomeBody extends StatelessWidget {
       children: [
         Container(
           width: double.infinity,
-          padding: const EdgeInsets.all(32),
-          decoration: const BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.all(Radius.circular(16))),
-          child: const Column(
+          padding: EdgeInsets.all(32.w),
+          decoration: roundedBoxRegular,
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 24),
+              verticalSpaceMedium,
               Text(
                 "Woohoo!",
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white,
-                    fontSize: 24),
+                style: kTitleText.copyWith(color: Colors.white),
               ),
-              SizedBox(height: 24),
+              verticalSpaceMedium,
               Text(
                 "Your\nauthentication is\nall sorted.\nBuild the\nimportant stuff.",
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontWeight: FontWeight.w900,
+                style: kRobotoText.copyWith(
+                    fontWeight: kFwBlack,
                     color: Colors.white,
-                    fontSize: 32),
+                    fontSize: kTitleLarge),
               ),
             ],
           ),
         ),
-        const SizedBox(height: 16),
-        const Text(
+        verticalSpaceRegular,
+        Text(
           "Next steps for you",
-          style: TextStyle(
-              fontWeight: FontWeight.w500, color: Colors.black, fontSize: 24),
+          style: kTitleText,
         ),
       ],
     );
