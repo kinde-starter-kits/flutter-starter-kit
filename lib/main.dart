@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(360, 690),
       builder: (_ , child) {
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'Flutter Kinde StarterKit',
           theme: ThemeData(
             primarySwatch: Colors.blue,
