@@ -1,6 +1,6 @@
-# Kinde Starter Kit - Flutter 0.7x
+# Kinde Starter Kit - Flutter
 
-The Kinde Starter Kit for Flutter SDK 0.7x.
+The Kinde Starter Kit for Flutter SDK.
 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://makeapullrequest.com) [![Kinde Docs](https://img.shields.io/badge/Kinde-Docs-eee?style=flat-square)](https://kinde.com/docs/developer-tools) [![Kinde Community](https://img.shields.io/badge/Kinde-Community-eee?style=flat-square)](https://thekindecommunity.slack.com)
 
