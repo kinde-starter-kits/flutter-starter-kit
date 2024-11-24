@@ -51,10 +51,15 @@ class EncryptedBox {
   }
 
   Future<String?> getNewToken() async {
-    String? token = await KindeFlutterSDK.instance.getToken();
-    if (token == null) return null; // Redirect user to the login page
-    await _box.put('token', token);
-    return token;
+    try {
+      final String? token = await KindeFlutterSDK.instance.getToken();
+      if (token != null) { // Redirect user to the login page
+        await _box.put('token', token);
+      }
+      return token;
+    } catch (e) {
+      return null;
+    }
   }
 
   Future<void> clear() async {

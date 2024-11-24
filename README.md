@@ -134,6 +134,31 @@ Open `build.gradle` file in your `app` directory of your android folder and chan
         }
     }
 ```
+Alternatively, the redirect URI can be directly configured by adding an
+intent-filter for AppAuth's RedirectUriReceiverActivity to your
+AndroidManifest.xml:
+
+```xml
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.my_app">
+...
+<activity
+        android:name="net.openid.appauth.RedirectUriReceiverActivity"
+        android:theme="@style/Theme.AppCompat.Translucent.NoTitleBar"
+        android:exported="true"
+        tools:node="replace">
+    <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="<your_custom_scheme>"
+              android:host="<your_custom_host>"/>
+    </intent-filter>
+</activity>
+...
+```
+
 #### iOS
 
 Please make sure you have configuration URL scheme in `Info.plist`:
@@ -145,10 +170,10 @@ Please make sure you have configuration URL scheme in `Info.plist`:
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>your_schema</string>
+			<string>your_custome_host</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>your_custom_scheme</string>
+				<string>your_custome_scheme</string>
 			</array>
 		</dict>
 	</array>

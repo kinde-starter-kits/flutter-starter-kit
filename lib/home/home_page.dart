@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_starter_kit/constants.dart';
+import 'package:flutter_starter_kit/encrypted_box.dart';
 import 'package:flutter_starter_kit/home/components/home_body.dart';
 import 'package:flutter_starter_kit/home/components/home_footer.dart';
 import 'package:flutter_starter_kit/home/components/home_header.dart';
@@ -23,9 +24,17 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    kindeClient.isAuthenticate().then((value) {
+    kindeClient.isAuthenticate().then((value) async {
       _loggedIn.value = value;
-      if (value) {
+      ///if user not logged, refresh access and refresh token
+      if ( ! value) {
+        await EncryptedBox.instance.returnAccessToken().then((accessToken) {
+          if(accessToken != null) {
+            _loggedIn.value = true;
+          }
+        });
+      }
+      if(_loggedIn.value) {
         _getProfile();
       }
     });
@@ -78,11 +87,14 @@ class _HomePageState extends State<HomePage> {
     kindeClient.logout().then((value) {
       _loggedIn.value = false;
       _profile.value = null;
+      EncryptedBox.instance.clear();
     });
   }
 
   _signUp() {
-    kindeClient.register();
+    kindeClient.register().then((_) {
+        EncryptedBox.instance.returnAccessToken();
+    });
   }
 
   _getProfile() {
