@@ -22,22 +22,26 @@ class _HomePageState extends State<HomePage> {
   final ValueNotifier<bool> _loggedIn = ValueNotifier(false);
 
   @override
-  void initState() {
+  void initState() async {
     super.initState();
-    kindeClient.isAuthenticate().then((value) async {
-      _loggedIn.value = value;
-      ///if user not logged, refresh access and refresh token
-      if ( ! value) {
-        await EncryptedBox.instance.returnAccessToken().then((accessToken) {
-          if(accessToken != null) {
-            _loggedIn.value = true;
-          }
-        });
+
+    ///if user not logged, refresh access and refresh token
+    try {
+      final isAuthenticated = await kindeClient.isAuthenticate();
+      if (!isAuthenticated) {
+        final accessToken = await EncryptedBox.instance.returnAccessToken();
+        _loggedIn.value = accessToken != null;
+      } else {
+        _loggedIn.value = true;
       }
-      if(_loggedIn.value) {
-        _getProfile();
+
+      if (_loggedIn.value) {
+        await _getProfile();
       }
-    });
+    } catch (e) {
+      debugPrint('Authentication error: $e');
+      _loggedIn.value = false;
+    }
   }
 
   @override
@@ -75,8 +79,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   _signIn() {
-    kindeClient.login(type: AuthFlowType.pkce).then((token) {
+    kindeClient.login(type: AuthFlowType.pkce).then((token) async {
       if (token != null) {
+        await EncryptedBox.instance.saveToken(token);
         _loggedIn.value = true;
         _getProfile();
       }
@@ -92,8 +97,21 @@ class _HomePageState extends State<HomePage> {
   }
 
   _signUp() {
-    kindeClient.register().then((_) {
-        EncryptedBox.instance.returnAccessToken();
+    kindeClient.register().then((_) async {
+      try {
+        await kindeClient.register();
+        final accessToken = await EncryptedBox.instance.returnAccessToken();
+        if (accessToken != null) {
+          _loggedIn.value = true;
+          await _getProfile();
+        }
+      } catch (e) {
+        debugPrint('Registration error: $e');
+        // Consider showing an error message to the user
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Registration failed: ${e.toString()}')),
+        );
+      }
     });
   }
 

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -36,29 +37,35 @@ class EncryptedBox {
   }
 
   Future<String?> returnAccessToken() async {
-    var token = _box.get('token', defaultValue: '');
-    if (token == '') {
+    var token = _box.get('token');
+    if (token == null) {
       return await getNewToken();
-    } else if (token != null) {
-      bool hasExpired = JwtDecoder.isExpired(token);
-      if (hasExpired) {
-        return await getNewToken();
-      }
-      return token;
-    } else {
-      return getNewToken();
     }
+    bool hasExpired = JwtDecoder.isExpired(token);
+    if (hasExpired) {
+      return await getNewToken();
+    }
+    return token;
   }
 
   Future<String?> getNewToken() async {
     try {
       final String? token = await KindeFlutterSDK.instance.getToken();
-      if (token != null) { // Redirect user to the login page
+      if (token != null) {
+        // Redirect user to the login page
         await _box.put('token', token);
       }
       return token;
     } catch (e) {
       return null;
+    }
+  }
+
+  Future<void> saveToken(String token) async {
+    try {
+      await _box.put('token', token);
+    } catch (e) {
+      debugPrint("saveToken() failed: ${e.toString()}");
     }
   }
 

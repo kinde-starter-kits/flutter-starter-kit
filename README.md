@@ -173,7 +173,7 @@ Please make sure you have configuration URL scheme in `Info.plist`:
 			<string>your_custome_host</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>your_custome_scheme</string>
+				<string>your_custom_scheme</string>
 			</array>
 		</dict>
 	</array>
