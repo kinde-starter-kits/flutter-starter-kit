@@ -19,88 +19,98 @@ class HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            appTitle,
+            style: kTitleText,
+          ),
+          Expanded(
+            child: loading
+                ? const CircularProgressIndicator.adaptive()
+                : profile == null
+                    ? UnloggedHeader(
+                        onLogin: onLogin,
+                        onRegister: onRegister,
+                      )
+                    : LoggedHeader(
+                        onLogout: onLogout,
+                        profile: profile,
+                      ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class UnloggedHeader extends StatelessWidget {
+  final VoidCallback? onLogin;
+  final VoidCallback? onRegister;
+
+  const UnloggedHeader(
+      {required this.onLogin, required this.onRegister, super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Text(
-          appTitle,
-          style: kTitleText,
+        MaterialButton(
+          padding: EdgeInsets.zero,
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          highlightElevation: 0,
+          elevation: 0,
+          onPressed: onLogin,
+          child: Text(
+            'Sign in',
+            style: kRobotoText.copyWith(fontWeight: kFwBold, color: kColorGrey),
+          ),
         ),
-        loading
-            ? const CircularProgressIndicator.adaptive()
-            : _trailingWidget(),
+        MaterialButton(
+          elevation: 0,
+          padding: EdgeInsets.zero,
+          color: Colors.black,
+          onPressed: onRegister,
+          child: Text(
+            'Sign up',
+            style:
+                kRobotoText.copyWith(fontWeight: kFwBold, color: Colors.white),
+          ),
+        )
       ],
     );
   }
+}
 
-  Widget _trailingWidget() {
-    if (profile != null) {
-      return IntrinsicHeight(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            AspectRatio(
-              aspectRatio: 1,
-              child: ClipOval(
-                child: InkWell(
-                  child: Container(
-                    color: kColorLightGrey,
-                    alignment: Alignment.center,
-                    child: Text(
-                      '${profile?.givenName?[0]}${profile?.familyName?[0]}',
-                      style: kTitleText,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            horizontalSpaceRegular,
-            InkWell(
-              onTap: onLogout,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    '${profile?.givenName} ${profile?.familyName}',
-                    style: kRobotoText.copyWith(fontSize: kHeadingTwo),
-                  ),
-                  const SizedBox(height: 10),
-                  const Text('Sign out'),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
-    } else {
-      return Row(
+class LoggedHeader extends StatelessWidget {
+  final UserProfileV2? profile;
+  final VoidCallback? onLogout;
+
+  const LoggedHeader(
+      {required this.onLogout, required this.profile, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          MaterialButton(
-            padding: EdgeInsets.zero,
-            highlightColor: Colors.transparent,
-            splashColor: Colors.transparent,
-            highlightElevation: 0,
-            elevation: 0,
-            onPressed: onLogin,
-            child: Text(
-              'Sign in',
-              style:
-                  kRobotoText.copyWith(fontWeight: kFwBold, color: kColorGrey),
-            ),
+          Text(
+            '${profile?.givenName} ${profile?.familyName}',
+            overflow: TextOverflow.clip,
+            style: kRobotoText.copyWith(fontSize: kHeadingTwo),
           ),
-          MaterialButton(
-            elevation: 0,
-            padding: EdgeInsets.zero,
-            color: Colors.black,
-            onPressed: onRegister,
-            child: Text(
-              'Sign up',
-              style: kRobotoText.copyWith(
-                  fontWeight: kFwBold, color: Colors.white),
-            ),
-          )
+          const SizedBox(height: 10),
+          InkWell(
+              onTap: onLogout,
+              child: const Text('Sign out')),
         ],
-      );
-    }
+      ),
+    );
   }
 }

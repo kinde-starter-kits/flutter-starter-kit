@@ -22,12 +22,11 @@ class _HomePageState extends State<HomePage> {
   final ValueNotifier<bool> _loggedIn = ValueNotifier(false);
 
   @override
-  void initState() async {
+  void initState() {
     super.initState();
 
     ///if user not logged, refresh access and refresh token
-    try {
-      final isAuthenticated = await kindeClient.isAuthenticate();
+    kindeClient.isAuthenticate().then((isAuthenticated) async {
       if (!isAuthenticated) {
         final accessToken = await EncryptedBox.instance.returnAccessToken();
         _loggedIn.value = accessToken != null;
@@ -38,15 +37,16 @@ class _HomePageState extends State<HomePage> {
       if (_loggedIn.value) {
         await _getProfile();
       }
-    } catch (e) {
+    }, onError: (e) {
       debugPrint('Authentication error: $e');
       _loggedIn.value = false;
-    }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       body: Padding(
         padding: EdgeInsets.only(
             top: MediaQuery.viewPaddingOf(context).top,
@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
             right: 16.w,
             bottom: MediaQuery.viewPaddingOf(context).bottom),
         child: Column(
-          mainAxisSize: MainAxisSize.max,
+          mainAxisSize: MainAxisSize.min,
           children: [
             ListenableBuilder(
                 listenable: Listenable.merge([_loading, _profile]),
@@ -66,12 +66,25 @@ class _HomePageState extends State<HomePage> {
                       onLogout: _signOut,
                       onRegister: _signUp);
                 }),
-            verticalSpaceMedium,
-            ValueListenableBuilder(
-                valueListenable: _loggedIn,
-                builder: (_, value, __) => HomeBody(loggedIn: value)),
-            const Spacer(),
-            const HomeFooter(),
+            Expanded(
+              child: SizedBox(
+                child: ValueListenableBuilder(
+                    valueListenable: _loggedIn,
+                  builder: (context, isLoggedIn, __) {
+                    return SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          verticalSpaceMedium,
+                          HomeBody(loggedIn: isLoggedIn),
+                          const HomeFooter(),
+                        ],
+                      ),
+                    );
+                  }
+                ),
+              ),
+            )
           ],
         ),
       ),

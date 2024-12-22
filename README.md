@@ -170,7 +170,7 @@ Please make sure you have configuration URL scheme in `Info.plist`:
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>your_custome_host</string>
+			<string>your_custom_host</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>your_custom_scheme</string>
