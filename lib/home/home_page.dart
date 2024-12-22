@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_starter_kit/constants.dart';
+import 'package:flutter_starter_kit/encrypted_box.dart';
 import 'package:flutter_starter_kit/home/components/home_body.dart';
 import 'package:flutter_starter_kit/home/components/home_footer.dart';
 import 'package:flutter_starter_kit/home/components/home_header.dart';
@@ -23,17 +24,29 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    kindeClient.isAuthenticate().then((value) {
-      _loggedIn.value = value;
-      if (value) {
-        _getProfile();
+
+    ///if user not logged, refresh access and refresh token
+    kindeClient.isAuthenticate().then((isAuthenticated) async {
+      if (!isAuthenticated) {
+        final accessToken = await EncryptedBox.instance.returnAccessToken();
+        _loggedIn.value = accessToken != null;
+      } else {
+        _loggedIn.value = true;
       }
+
+      if (_loggedIn.value) {
+        await _getProfile();
+      }
+    }, onError: (e) {
+      debugPrint('Authentication error: $e');
+      _loggedIn.value = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       body: Padding(
         padding: EdgeInsets.only(
             top: MediaQuery.viewPaddingOf(context).top,
@@ -41,7 +54,7 @@ class _HomePageState extends State<HomePage> {
             right: 16.w,
             bottom: MediaQuery.viewPaddingOf(context).bottom),
         child: Column(
-          mainAxisSize: MainAxisSize.max,
+          mainAxisSize: MainAxisSize.min,
           children: [
             ListenableBuilder(
                 listenable: Listenable.merge([_loading, _profile]),
@@ -53,12 +66,25 @@ class _HomePageState extends State<HomePage> {
                       onLogout: _signOut,
                       onRegister: _signUp);
                 }),
-            verticalSpaceMedium,
-            ValueListenableBuilder(
-                valueListenable: _loggedIn,
-                builder: (_, value, __) => HomeBody(loggedIn: value)),
-            const Spacer(),
-            const HomeFooter(),
+            Expanded(
+              child: SizedBox(
+                child: ValueListenableBuilder(
+                    valueListenable: _loggedIn,
+                  builder: (context, isLoggedIn, __) {
+                    return SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          verticalSpaceMedium,
+                          HomeBody(loggedIn: isLoggedIn),
+                          const HomeFooter(),
+                        ],
+                      ),
+                    );
+                  }
+                ),
+              ),
+            )
           ],
         ),
       ),
@@ -66,8 +92,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   _signIn() {
-    kindeClient.login(type: AuthFlowType.pkce).then((token) {
+    kindeClient.login(type: AuthFlowType.pkce).then((token) async {
       if (token != null) {
+        await EncryptedBox.instance.saveToken(token);
         _loggedIn.value = true;
         _getProfile();
       }
@@ -78,11 +105,27 @@ class _HomePageState extends State<HomePage> {
     kindeClient.logout().then((value) {
       _loggedIn.value = false;
       _profile.value = null;
+      EncryptedBox.instance.clear();
     });
   }
 
   _signUp() {
-    kindeClient.register();
+    kindeClient.register().then((_) async {
+      try {
+        await kindeClient.register();
+        final accessToken = await EncryptedBox.instance.returnAccessToken();
+        if (accessToken != null) {
+          _loggedIn.value = true;
+          await _getProfile();
+        }
+      } catch (e) {
+        debugPrint('Registration error: $e');
+        // Consider showing an error message to the user
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Registration failed: ${e.toString()}')),
+        );
+      }
+    });
   }
 
   _getProfile() {
