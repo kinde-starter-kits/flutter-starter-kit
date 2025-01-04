@@ -26,8 +26,8 @@ class EncryptedBox {
     List<int> secureKey;
     if (!containsEncryptionKey) {
       secureKey = Hive.generateSecureKey();
-      await secureStorage.write(
-          key: _encryptionKey, value: base64UrlEncode(secureKey));
+      //await secureStorage.write(
+      //    key: _encryptionKey, value: base64UrlEncode(secureKey));
     } else {
       final base64 = await secureStorage.read(key: _encryptionKey);
       secureKey = base64Url.decode(base64!);

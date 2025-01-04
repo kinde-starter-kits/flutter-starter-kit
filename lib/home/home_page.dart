@@ -23,12 +23,12 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    kindeClient.isAuthenticate().then((value) {
-      _loggedIn.value = value;
-      if (value) {
-        _getProfile();
-      }
-    });
+      kindeClient.isAuthenticate(context).then((value) {
+        _loggedIn.value = value;
+        if (value) {
+          _getProfile();
+        }
+      });
   }
 
   @override
@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _signIn() {
-    kindeClient.login(type: AuthFlowType.pkce).then((token) {
+    kindeClient.login(type: AuthFlowType.pkce, context: context).then((token) {
       if (token != null) {
         _loggedIn.value = true;
         _getProfile();
