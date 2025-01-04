@@ -40,8 +40,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  kinde_flutter_sdk:
-    path: /Users/brettchaldecott/Development/upwork/kinde/flutter/flutter-macos-web/kinde-flutter-sdk-update
+  kinde_flutter_sdk: ^1.0.4
   url_launcher: ^6.1.11
   hive: ^2.2.3
   flutter_secure_storage: ^8.0.0
