@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "au.kinde.flutter_starter_kit.flutter_starter_kit"
+    namespace = "com.kinde.flutter_starter_kit"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -21,7 +21,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "au.kinde.flutter_starter_kit.flutter_starter_kit"
+        applicationId = "com.kinde.flutter_starter_kit"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
@@ -29,7 +29,7 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
 
-        manifestPlaceholders["appAuthRedirectScheme"] ="au.kinde.flutter_starter_kit"
+        manifestPlaceholders["appAuthRedirectScheme"] = "com.kinde.flutterstarterkit"
     }
 
     buildTypes {
