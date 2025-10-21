@@ -16,46 +16,46 @@ This SDK is suitable for:
 - Flutter 3.10.0 or later.
 - Dart 3.0.6 or later.
 
-Follow [the installation instructions for your chosen OS](https://docs.flutter.dev/get-started/install) to install dependencies
+Follow [the installation instructions for your chosen OS](https://docs.flutter.dev/install) to install dependencies
 
 ### Initial set up
 
 1. Clone the repository to your machine:
-```shell
-https://github.com/abdullahihsan3/flutter-starter-kit.git
-```
+    ```shell
+    git clone https://github.com/kinde-starter-kits/flutter-starter-kit.git
+    ```
 2. Go into the project:
-```shell
-cd flutter-starter-kit
-```
+    ```shell
+    cd flutter-starter-kit
+    ```
 3. Install the dependencies:
-```shell
-flutter pub get
-
-# [iOS] Install iOS dependencies
-cd ios
-pod install
-```
+    ```shell
+    flutter pub get
+    ```
 
 ### Setup your local environment
 
-1. In Kinde, go to Settings > Applications.
+1. In Kinde, click on "Settings".
 
-2. Select View details on your app.
+2. Scroll down to "Applications".
 
-3. Scroll down to the Callback URLs section.
+3. Click on "View details" on your app's card.
 
-4. Add in the callback URLs for your app, which might look something like this:
+4. Scroll down to the "Callback URLs" section.
 
+5. Add in the callback URLs for your app, which follows the following format:
 
-```shell
-  Allowed callback_URLs: "<your_custom_scheme>://kinde_callback"
-  Allowed logout_redirect_URLs: "<your_custom_scheme>://kinde_logoutcallback"
-```
+   - Allowed callback_URLs: "your.custom.scheme://kinde_callback"
+   - Allowed logout_redirect_URLs: "your.custom.scheme://kinde_logoutcallback"
 
-Note: The custom scheme can either match your appId/bundleId or be something completely new as long as it's distinct enough. Using the appId/bundleId of your app is quite common but it's not always possible if it contains illegal characters for URI schemes (like underscores) or if you already have another handler for that scheme - so just use something else.
+> [!IMPORTANT]
+> When choosing a custom scheme, ensure it:
+> - does not contain underscores or capital letters as those are illegal characters for URI schemes.
+> - is distinct enough to avoid conflicts with other apps.
+>
+> You can use the appId/bundleId of your app as your custom scheme. This is a quite common practice but ensure it adheres to the above guidelines. If it doesn't, feel free to choose a different scheme.
 
-In your main.dart file, 
+In your main.dart file,
 
 ```shell
 import 'package:flutter/material.dart';
@@ -91,13 +91,6 @@ Put these variables in your `.env` file. You can find these variables on your Se
 
 Below is an example of a `.env` file
 
-```shell
-KINDE_AUTH_DOMAIN=https://<your_kinde_subdomain>.kinde.com
-KINDE_AUTH_CLIENT_ID=<your_kinde_client_id>
-KINDE_LOGIN_REDIRECT_URI=<your_custom_scheme>://kinde_callback
-KINDE_LOGOUT_REDIRECT_URI=<your_custom_scheme>://kinde_logoutcallback
-KINDE_AUDIENCE=<your_kinde_audience>
-```
 
 ```shell
 KINDE_AUTH_DOMAIN='https://myapp.kinde.com'
@@ -115,7 +108,8 @@ You need to specify in Kinde which url you would like your user to be redirected
 
 On the App Keys page set `Allowed callback URLs` to your deep linking
 
-> Important! This is required for your users to successfully log in to your app.
+> [!IMPORTANT]
+> This is required for your users to successfully log in to your app.
 
 You will also need to set the url they will be redirected to upon logout. Set the `Allowed logout redirect URLs` to your deep linking.
 
@@ -123,16 +117,26 @@ You will also need to set the url they will be redirected to upon logout. Set th
 
 #### Android
 
-Open `build.gradle` file in your `app` directory of your android folder and change your scheme:
+Open `build.gradle` or `build.gradle.kts` file in your `app` directory of your `android` folder and change your scheme:
 
 ```groovy
-      android { 
+// build.gradle
+android {
     defaultConfig {
-    manifestPlaceholders += [
-      'appAuthRedirectScheme': '<your_custom_scheme>'
-            ]
-        }
+        manifestPlaceholders += [
+            'appAuthRedirectScheme': 'your.custom.scheme'
+        ]
     }
+}
+```
+
+```kotlin
+// build.gradle.kts
+android {
+    defaultConfig {
+         manifestPlaceholders["appAuthRedirectScheme"] = "your.custom.scheme"
+    }
+}
 ```
 #### iOS
 
@@ -144,8 +148,6 @@ Please make sure you have configuration URL scheme in `Info.plist`:
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>your_schema</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>your_custom_scheme</string>
