@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_starter_kit/encrypted_box.dart';
 import 'package:kinde_flutter_sdk/kinde_flutter_sdk.dart';
 
 import 'home/home_page.dart';
@@ -18,7 +17,6 @@ void main() async {
       scopes: ["email","profile","offline","openid"] // optional
   );
 
-  await EncryptedBox.init();
   runApp(const MyApp());
 }
 

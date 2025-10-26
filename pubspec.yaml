@@ -33,9 +33,6 @@ dependencies:
 
   kinde_flutter_sdk: 1.1.1
   url_launcher: ^6.3.2
-  hive: ^2.2.3
-  flutter_secure_storage: ^8.1.0
-  jwt_decoder: ^2.0.1
   flutter_dotenv: ^6.0.0
   flutter_screenutil: ^5.9.3
 
