@@ -35,15 +35,13 @@ Follow [the installation instructions for your chosen OS](https://docs.flutter.d
 
 ### Setup your local environment
 
-1. In Kinde, click on "Settings".
+1. In Kinde Admin, scroll down to "Applications".
 
-2. Scroll down to "Applications".
+2. Click on "View details" on your app's card.
 
-3. Click on "View details" on your app's card.
+3. Scroll down to the "Callback URLs" section.
 
-4. Scroll down to the "Callback URLs" section.
-
-5. Add in the callback URLs for your app, which follows the following format:
+4. Add in the callback URLs for your app, which follows the following format:
 
    - Allowed callback_URLs: "your.custom.scheme://kinde_callback"
    - Allowed logout_redirect_URLs: "your.custom.scheme://kinde_logoutcallback"
@@ -53,7 +51,7 @@ Follow [the installation instructions for your chosen OS](https://docs.flutter.d
 > - does not contain underscores or capital letters as those are illegal characters for URI schemes.
 > - is distinct enough to avoid conflicts with other apps.
 >
-> You can use the appId/bundleId of your app as your custom scheme. This is a quite common practice but ensure it adheres to the above guidelines. If it doesn't, feel free to choose a different scheme.
+> You can use the appId/bundleId of your app as your custom scheme. This is a quite common practice but ensure it adheres to the above guidelines. If it doesn't, please choose a different scheme.
 
 In your main.dart file,
 
@@ -150,7 +148,7 @@ Please make sure you have configuration URL scheme in `Info.plist`:
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>your_custom_scheme</string>
+				<string>your.custom.scheme</string>
 			</array>
 		</dict>
 	</array>
