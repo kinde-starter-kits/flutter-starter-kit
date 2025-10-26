@@ -138,22 +138,50 @@ android {
 ```
 #### iOS
 
-Please make sure you have configuration URL scheme in `Info.plist`:
+Add the configuration URL scheme to your `Info.plist`:
 
-```shell
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>your.custom.scheme</string>
-			</array>
-		</dict>
-	</array>
+```plist
+<key>CFBundleURLTypes</key>
+<array>
+	<dict>
+		<key>CFBundleTypeRole</key>
+		<string>Editor</string>
+		<key>CFBundleURLSchemes</key>
+		<array>
+			<string>your.custom.scheme</string>
+		</array>
+	</dict>
+</array>
 
 ```
+
+#### macOS
+
+1. Add the configuration URL scheme to your `Info.plist`:
+
+    ```plist
+    <key>CFBundleURLTypes</key>
+    <array>
+    	<dict>
+    		<key>CFBundleTypeRole</key>
+    		<string>Editor</string>
+    		<key>CFBundleURLSchemes</key>
+    		<array>
+    			<string>your.custom.scheme</string>
+    		</array>
+    	</dict>
+    </array>
+
+    ```
+
+2. Include the following entitlements in your `DebugProfile.entitlements` and `Release.entitlements` files.
+
+    ```entitlements
+	<key>keychain-access-groups</key>
+	<array/>
+	<key>com.apple.security.network.client</key>
+	<true/>
+    ```
 
 ### How to start?
 
