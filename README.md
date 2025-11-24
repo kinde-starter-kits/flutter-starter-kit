@@ -24,7 +24,7 @@ Follow [the installation instructions for your chosen OS](https://docs.flutter.d
 1. Clone the repository to your machine:
 
 ```shell
-https://github.com/abdullahihsan3/flutter-starter-kit.git
+https://github.com/kinde-starter-kits/flutter-starter-kit.git
 ```
 
 2. Go into the project:
