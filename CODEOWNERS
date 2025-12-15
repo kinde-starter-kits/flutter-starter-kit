@@ -1,5 +1,2 @@
 * @kinde-starter-kits/giants-kinde
-build.gradle @kinde-starter-kits/sdk-engineers
-**/build.gradle @kinde-starter-kits/sdk-engineers
-build.gradle @kinde-starter-kits/sdk-engineers
-**/build.gradle @kinde-starter-kits/sdk-engineers
+/pubspec.yaml @kkinde-starter-kits/sdk-engineers
