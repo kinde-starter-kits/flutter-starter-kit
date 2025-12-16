@@ -23,11 +23,15 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    kindeClient.isAuthenticate().then((value) {
-      _loggedIn.value = value;
-      if (value) {
-        _getProfile();
-      }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      kindeClient.isAuthenticate(context).then((value) {
+        _loggedIn.value = value;
+
+        if (value) {
+          _loading.value = true;
+          _getProfile();
+        }
+      });
     });
   }
 
@@ -40,33 +44,35 @@ class _HomePageState extends State<HomePage> {
             left: 16.w,
             right: 16.w,
             bottom: MediaQuery.viewPaddingOf(context).bottom),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            ListenableBuilder(
-                listenable: Listenable.merge([_loading, _profile]),
-                builder: (context, _) {
-                  return HomeHeader(
-                      profile: _profile.value,
-                      loading: _loading.value,
-                      onLogin: _signIn,
-                      onLogout: _signOut,
-                      onRegister: _signUp);
-                }),
-            verticalSpaceMedium,
-            ValueListenableBuilder(
-                valueListenable: _loggedIn,
-                builder: (_, value, __) => HomeBody(loggedIn: value)),
-            const Spacer(),
-            const HomeFooter(),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              ListenableBuilder(
+                  listenable: Listenable.merge([_loading, _profile]),
+                  builder: (context, _) {
+                    return HomeHeader(
+                        profile: _profile.value,
+                        loading: _loading.value,
+                        onLogin: _signIn,
+                        onLogout: _signOut,
+                        onRegister: _signUp);
+                  }),
+              verticalSpaceMedium,
+              ValueListenableBuilder(
+                  valueListenable: _loggedIn,
+                  builder: (_, value, __) => HomeBody(loggedIn: value)),
+              SizedBox(height: 30),
+              const HomeFooter(),
+            ],
+          ),
         ),
       ),
     );
   }
 
   _signIn() {
-    kindeClient.login(type: AuthFlowType.pkce).then((token) {
+    kindeClient.login(type: AuthFlowType.pkce, context: context).then((token) {
       if (token != null) {
         _loggedIn.value = true;
         _getProfile();
@@ -82,11 +88,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   _signUp() {
-    kindeClient.register();
+    kindeClient.register(context: context);
   }
 
   _getProfile() {
-    _loading.value = true;
     kindeClient.getUserProfileV2().then((profile) async {
       _profile.value = profile;
     }).whenComplete(() => _loading.value = false);
