@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_starter_kit/constants.dart';
+import 'package:kinde_flutter_sdk/kinde_flutter_sdk.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeBody extends StatelessWidget {
-  const HomeBody({super.key, required this.loggedIn});
+  const HomeBody({super.key, required this.loggedIn, required this.profile});
 
   final bool loggedIn;
+  final UserProfileV2? profile;
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +19,7 @@ class HomeBody extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(32.w),
+      margin: EdgeInsets.only(bottom: 64.h, top: 64.h),
       decoration: roundedBoxRegular,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -62,6 +65,16 @@ class HomeBody extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        verticalSpaceSmall,
+        Visibility(
+          visible: profile != null,
+          maintainState: true,
+          maintainAnimation: true,
+          maintainSize: true,
+          child: Text('Hi, ${profile?.givenName} ${profile?.familyName}!',
+              style: kRobotoText.copyWith(fontSize: kHeadingThree)),
+        ),
+        verticalSpaceRegular,
         Container(
           width: double.infinity,
           padding: EdgeInsets.all(32.w),
@@ -69,7 +82,6 @@ class HomeBody extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              verticalSpaceMedium,
               Text(
                 "Woohoo!",
                 textAlign: TextAlign.center,
