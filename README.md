@@ -13,6 +13,7 @@ To get started set up an account on [Kinde](https://app.kinde.com/register).
 ### Prerequisites
 
 This SDK is suitable for:
+
 - Flutter 3.10.0 or later.
 - Dart 3.0.6 or later.
 
@@ -21,14 +22,19 @@ Follow [the installation instructions for your chosen OS](https://docs.flutter.d
 ### Initial set up
 
 1. Clone the repository to your machine:
+
 ```shell
-https://github.com/abdullahihsan3/flutter-starter-kit.git
+https://github.com/kinde-starter-kits/flutter-starter-kit.git
 ```
+
 2. Go into the project:
+
 ```shell
 cd flutter-starter-kit
 ```
+
 3. Install the dependencies:
+
 ```shell
 flutter pub get
 
@@ -47,7 +53,6 @@ pod install
 
 4. Add in the callback URLs for your app, which might look something like this:
 
-
 ```shell
   Allowed callback_URLs: "<your_custom_scheme>://kinde_callback"
   Allowed logout_redirect_URLs: "<your_custom_scheme>://kinde_logoutcallback"
@@ -55,7 +60,7 @@ pod install
 
 Note: The custom scheme can either match your appId/bundleId or be something completely new as long as it's distinct enough. Using the appId/bundleId of your app is quite common but it's not always possible if it contains illegal characters for URI schemes (like underscores) or if you already have another handler for that scheme - so just use something else.
 
-In your main.dart file, 
+In your main.dart file,
 
 ```shell
 import 'package:flutter/material.dart';
@@ -74,9 +79,11 @@ void main(){
   );
 }
 ```
+
 Note: To setup the .env file in your flutter package, check the flutter_dotenv package.
 
 ### Environment variables:
+
 Put these variables in your `.env` file. You can find these variables on your Settings > Applications > [Your app] > View details page.
 
 - `KINDE_AUTH_DOMAIN` - your Kinde domain
@@ -126,14 +133,15 @@ You will also need to set the url they will be redirected to upon logout. Set th
 Open `build.gradle` file in your `app` directory of your android folder and change your scheme:
 
 ```groovy
-      android { 
+android {
     defaultConfig {
-    manifestPlaceholders += [
-      'appAuthRedirectScheme': '<your_custom_scheme>'
-            ]
-        }
+      manifestPlaceholders += [
+        'appAuthRedirectScheme': '<your_custom_scheme>'
+      ]
     }
+}
 ```
+
 #### iOS
 
 Please make sure you have configuration URL scheme in `Info.plist`:
@@ -158,7 +166,9 @@ Please make sure you have configuration URL scheme in `Info.plist`:
 ### How to start?
 
 #### Start your app
+
 Run the following command to use your application
+
 ```shell
 flutter run
 ```
