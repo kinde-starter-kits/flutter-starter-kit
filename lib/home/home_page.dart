@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    kindeClient.isAuthenticate().then((value) {
+    kindeClient.isAuthenticated().then((value) {
       _loggedIn.value = value;
       if (value) {
         _getProfile();

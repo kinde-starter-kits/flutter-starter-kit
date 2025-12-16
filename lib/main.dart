@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_starter_kit/encrypted_box.dart';
 import 'package:kinde_flutter_sdk/kinde_flutter_sdk.dart';
 
 import 'home/home_page.dart';
@@ -14,11 +13,10 @@ void main() async {
       authClientId: dotenv.env['KINDE_AUTH_CLIENT_ID']!,
       loginRedirectUri: dotenv.env['KINDE_LOGIN_REDIRECT_URI']!,
       logoutRedirectUri: dotenv.env['KINDE_LOGOUT_REDIRECT_URI']!,
-      audience: dotenv.env['KINDE_AUDIENCE'], //optional
+      // audience: dotenv.env['KINDE_AUDIENCE'], //optional
       scopes: ["email","profile","offline","openid"] // optional
   );
 
-  await EncryptedBox.init();
   runApp(const MyApp());
 }
 
