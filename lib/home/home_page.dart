@@ -34,33 +34,29 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
+      body: ListView(
         padding: EdgeInsets.only(
-            top: MediaQuery.viewPaddingOf(context).top,
-            left: 16.w,
-            right: 16.w,
-            bottom: MediaQuery.viewPaddingOf(context).bottom),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            ListenableBuilder(
-                listenable: Listenable.merge([_loading, _profile]),
-                builder: (context, _) {
-                  return HomeHeader(
-                      profile: _profile.value,
-                      loading: _loading.value,
-                      onLogin: _signIn,
-                      onLogout: _signOut,
-                      onRegister: _signUp);
-                }),
-            verticalSpaceMedium,
-            ValueListenableBuilder(
-                valueListenable: _loggedIn,
-                builder: (_, value, __) => HomeBody(loggedIn: value)),
-            const Spacer(),
-            const HomeFooter(),
-          ],
-        ),
+          top: MediaQuery.viewPaddingOf(context).top,
+          left: 16.w,
+          right: 16.w,
+          bottom: MediaQuery.viewPaddingOf(context).bottom,),
+        children: [
+          ListenableBuilder(
+              listenable: Listenable.merge([_loading, _profile]),
+              builder: (context, _) {
+                return HomeHeader(
+                    profile: _profile.value,
+                    loading: _loading.value,
+                    onLogin: _signIn,
+                    onLogout: _signOut,
+                    onRegister: _signUp);
+              }),
+          verticalSpaceMedium,
+          ValueListenableBuilder(
+              valueListenable: _loggedIn,
+              builder: (_, value, __) => HomeBody(loggedIn: value)),
+          const HomeFooter(),
+        ],
       ),
     );
   }
