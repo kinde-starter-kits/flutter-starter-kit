@@ -1,2 +1,5 @@
 * @kinde-starter-kits/giants-kinde
-/pubspec.yaml @kinde-starter-kits/sdk-engineers
+pubspec.yaml @kinde-starter-kits/sdk-engineers
+**/pubspec.yaml @kinde-starter-kits/sdk-engineers
+pubspec.lock @kinde-starter-kits/sdk-engineers
+**/pubspec.lock @kinde-starter-kits/sdk-engineers
