@@ -26,9 +26,11 @@ class HomeHeader extends StatelessWidget {
           appTitle,
           style: kTitleText,
         ),
-        loading
-            ? const CircularProgressIndicator.adaptive()
-            : _trailingWidget(),
+        Flexible(
+          child: loading
+              ? const CircularProgressIndicator.adaptive()
+              : _trailingWidget(),
+        ),
       ],
     );
   }
@@ -37,6 +39,7 @@ class HomeHeader extends StatelessWidget {
     if (profile != null) {
       return IntrinsicHeight(
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             AspectRatio(
@@ -47,7 +50,7 @@ class HomeHeader extends StatelessWidget {
                     color: kColorLightGrey,
                     alignment: Alignment.center,
                     child: Text(
-                      '${profile?.givenName?[0]}${profile?.familyName?[0]}',
+                      '${profile?.givenName?[0] ?? ''}${profile?.familyName?[0] ?? ''}',
                       style: kTitleText,
                     ),
                   ),
@@ -55,18 +58,23 @@ class HomeHeader extends StatelessWidget {
               ),
             ),
             horizontalSpaceRegular,
-            InkWell(
-              onTap: onLogout,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    '${profile?.givenName} ${profile?.familyName}',
-                    style: kRobotoText.copyWith(fontSize: kHeadingTwo),
-                  ),
-                  const SizedBox(height: 10),
-                  const Text('Sign out'),
-                ],
+            Flexible(
+              child: InkWell(
+                onTap: onLogout,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      '${profile?.givenName ?? ''} ${profile?.familyName ?? ''}',
+                      style: kRobotoText.copyWith(fontSize: kHeadingTwo),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    const SizedBox(height: 10),
+                    const Text('Sign out'),
+                  ],
+                ),
               ),
             ),
           ],
@@ -74,6 +82,7 @@ class HomeHeader extends StatelessWidget {
       );
     } else {
       return Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           MaterialButton(
             padding: EdgeInsets.zero,

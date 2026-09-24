@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    kindeClient.isAuthenticate().then((value) {
+    kindeClient.isAuthenticated().then((value) {
       _loggedIn.value = value;
       if (value) {
         _getProfile();
@@ -34,32 +34,37 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.only(
-            top: MediaQuery.viewPaddingOf(context).top,
-            left: 16.w,
-            right: 16.w,
-            bottom: MediaQuery.viewPaddingOf(context).bottom),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            ListenableBuilder(
-                listenable: Listenable.merge([_loading, _profile]),
-                builder: (context, _) {
-                  return HomeHeader(
-                      profile: _profile.value,
-                      loading: _loading.value,
-                      onLogin: _signIn,
-                      onLogout: _signOut,
-                      onRegister: _signUp);
-                }),
-            verticalSpaceMedium,
-            ValueListenableBuilder(
-                valueListenable: _loggedIn,
-                builder: (_, value, __) => HomeBody(loggedIn: value)),
-            const Spacer(),
-            const HomeFooter(),
-          ],
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: Column(
+            children: [
+              ListenableBuilder(
+                  listenable: Listenable.merge([_loading, _profile]),
+                  builder: (context, _) {
+                    return HomeHeader(
+                        profile: _profile.value,
+                        loading: _loading.value,
+                        onLogin: _signIn,
+                        onLogout: _signOut,
+                        onRegister: _signUp);
+                  }),
+              verticalSpaceMedium,
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ValueListenableBuilder(
+                          valueListenable: _loggedIn,
+                          builder: (_, value, __) => HomeBody(loggedIn: value)),
+                      verticalSpaceLarge,
+                      const HomeFooter(),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
