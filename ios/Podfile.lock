@@ -1,29 +1,22 @@
 PODS:
-  - AppAuth (1.6.2):
-    - AppAuth/Core (= 1.6.2)
-    - AppAuth/ExternalUserAgent (= 1.6.2)
-  - AppAuth/Core (1.6.2)
-  - AppAuth/ExternalUserAgent (1.6.2):
+  - AppAuth (1.7.6):
+    - AppAuth/Core (= 1.7.6)
+    - AppAuth/ExternalUserAgent (= 1.7.6)
+  - AppAuth/Core (1.7.6)
+  - AppAuth/ExternalUserAgent (1.7.6):
     - AppAuth/Core
   - Flutter (1.0.0)
   - flutter_appauth (0.0.1):
-    - AppAuth (= 1.6.2)
+    - AppAuth (= 1.7.6)
     - Flutter
-  - flutter_custom_tabs (0.0.1):
-    - Flutter
-  - flutter_inappwebview (0.0.1):
-    - Flutter
-    - flutter_inappwebview/Core (= 0.0.1)
-    - OrderedSet (~> 5.0)
-  - flutter_inappwebview/Core (0.0.1):
-    - Flutter
-    - OrderedSet (~> 5.0)
   - flutter_secure_storage (6.0.0):
     - Flutter
   - kinde_flutter_sdk (0.0.1):
     - Flutter
-  - OrderedSet (5.0.0)
   - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
   - url_launcher_ios (0.0.1):
@@ -32,48 +25,42 @@ PODS:
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_appauth (from `.symlinks/plugins/flutter_appauth/ios`)
-  - flutter_custom_tabs (from `.symlinks/plugins/flutter_custom_tabs/ios`)
-  - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - kinde_flutter_sdk (from `.symlinks/plugins/kinde_flutter_sdk/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
 SPEC REPOS:
   trunk:
     - AppAuth
-    - OrderedSet
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
   flutter_appauth:
     :path: ".symlinks/plugins/flutter_appauth/ios"
-  flutter_custom_tabs:
-    :path: ".symlinks/plugins/flutter_custom_tabs/ios"
-  flutter_inappwebview:
-    :path: ".symlinks/plugins/flutter_inappwebview/ios"
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
   kinde_flutter_sdk:
     :path: ".symlinks/plugins/kinde_flutter_sdk/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  shared_preferences_foundation:
+    :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
-  AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
-  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  flutter_appauth: cf9b928962105b2a64a9802585d1c8adaf3e0f46
-  flutter_custom_tabs: f8aa300a93d869c0d117c8709a9af39cbd011adc
-  flutter_inappwebview: 3d32228f1304635e7c028b0d4252937730bbc6cf
+  AppAuth: d4f13a8fe0baf391b2108511793e4b479691fb73
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
+  flutter_appauth: aff60f61e4a80b8b5c051615f00bf8f3b54fc5e8
   flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
-  kinde_flutter_sdk: fe1209ab4c3aa00374e6f3814e191898d6374f46
-  OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
-  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
-  url_launcher_ios: 68d46cc9766d0c41dbdc884310529557e3cd7a86
+  kinde_flutter_sdk: 6e23dcd6c08118d2f0997e63eb66785c93524d9c
+  path_provider_foundation: 0b743cbb62d8e47eab856f09262bb8c1ddcfe6ba
+  shared_preferences_foundation: 5086985c1d43c5ba4d5e69a4e8083a389e2909e6
+  url_launcher_ios: bb13df5870e8c4234ca12609d04010a21be43dfa
 
-PODFILE CHECKSUM: 70d9d25280d0dd177a5f637cdb0f0b0b12c6a189
+PODFILE CHECKSUM: 3c63482e143d1b91d2d2560aee9fb04ecc74ac7e
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.16.2
