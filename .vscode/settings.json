@@ -1,6 +1,8 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.codeActionsOnSave": {"source.fixAll": true},
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
   "editor.formatOnSave": true,
   "files.trimTrailingWhitespace": true,
   "markdown.extension.italic.indicator": "_",
@@ -9,5 +11,6 @@
   "markdown.preview.fontFamily": "system-ui, -apple-system, sans-serif",
   "files.associations": {
     "CODEOWNERS": "ini"
-  }
+  },
+  "java.configuration.updateBuildConfiguration": "interactive"
 }
