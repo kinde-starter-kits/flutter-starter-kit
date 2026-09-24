@@ -40,32 +40,32 @@ class _HomePageState extends State<HomePage> {
             left: 16.w,
             right: 16.w,
             bottom: MediaQuery.viewPaddingOf(context).bottom),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            ListenableBuilder(
-                listenable: Listenable.merge([_loading, _profile]),
-                builder: (context, _) {
-                  return HomeHeader(
-                      profile: _profile.value,
-                      loading: _loading.value,
-                      onLogin: _signIn,
-                      onLogout: _signOut,
-                      onRegister: _signUp);
-                }),
-            verticalSpaceMedium,
-            ValueListenableBuilder(
-                valueListenable: _loggedIn,
-                builder: (_, value, __) => HomeBody(loggedIn: value)),
-            const Spacer(),
-            const HomeFooter(),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              ListenableBuilder(
+                  listenable: Listenable.merge([_loading, _profile]),
+                  builder: (context, _) {
+                    return HomeHeader(
+                        profile: _profile.value,
+                        loading: _loading.value,
+                        onLogin: _signIn,
+                        onLogout: _signOut,
+                        onRegister: _signUp);
+                  }),
+              ListenableBuilder(
+                  listenable: Listenable.merge([_loggedIn, _profile]),
+                  builder: (context, _) => HomeBody(
+                      loggedIn: _loggedIn.value, profile: _profile.value)),
+              const HomeFooter(),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  _signIn() {
+  void _signIn() {
     kindeClient.login(type: AuthFlowType.pkce).then((token) {
       if (token != null) {
         _loggedIn.value = true;
@@ -74,18 +74,18 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  _signOut() {
+  void _signOut() {
     kindeClient.logout().then((value) {
       _loggedIn.value = false;
       _profile.value = null;
     });
   }
 
-  _signUp() {
+  void _signUp() {
     kindeClient.register();
   }
 
-  _getProfile() {
+  void _getProfile() {
     _loading.value = true;
     kindeClient.getUserProfileV2().then((profile) async {
       _profile.value = profile;
